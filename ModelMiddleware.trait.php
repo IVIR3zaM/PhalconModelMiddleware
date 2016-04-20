@@ -1,7 +1,7 @@
 <?php
 namespace IVIR3zaM\PhalconModelMiddleware;
 
-trait ModelsConnector
+trait ModelMiddleware
 {
     protected $_haveDatabaseTable = null;
     protected $_classProperties = null;
