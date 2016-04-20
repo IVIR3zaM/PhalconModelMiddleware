@@ -1,5 +1,5 @@
 {
-  "name": "IVIR3zaM/PhalconModelMiddleware",
+  "name": "ivir3zam/phalcon-model-middleware",
   "type": "library",
   "description": "This library is for connecting models in phalcon like UML Class Diagrams. merging two models and create one single model. this is an implementation of polymorphic relationship",
   "keywords": ["phalcon", "model", "polymorphic"],
