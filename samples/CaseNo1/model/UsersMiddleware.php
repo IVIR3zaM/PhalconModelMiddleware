@@ -1,6 +1,6 @@
 <?php
 
-use IVIR3zaM\PhalconModelMiddleware as ModelMiddleware;
+use IVIR3zaM\PhalconModelMiddleware\ModelsConnector as ModelMiddleware;
 
 abstract class UsersMiddleware extends Users
 {
