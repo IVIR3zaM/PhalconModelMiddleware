@@ -1,0 +1,26 @@
+{
+  "name": "IVIR3zaM/PhalconModelMiddleware",
+  "type": "library",
+  "description": "This library is for connecting models in phalcon like UML Class Diagrams. merging two models and create one single model. this is an implementation of polymorphic relationship",
+  "keywords": ["phalcon", "model", "polymorphic"],
+  "homepage": "https://github.com/IVIR3zaM/PhalconModelMiddleware",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mohammd Reza Maghoul",
+      "email": "m.reza.maghool@gmail.com",
+      "homepage": "https://github.com/IVIR3zaM",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "ext-phalcon": ">=2.0.6"
+  },
+  "autoload": {
+    "classmap": [
+      "ModelMiddleware.trait.php"
+    ]
+  },
+  "minimum-stability": "dev"
+}
