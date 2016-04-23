@@ -18,6 +18,7 @@ trait ModelMiddleware
             $obj = new $parent();
             $table = $obj->getSource();
         }
+
         return $table;
     }
 
@@ -115,6 +116,7 @@ trait ModelMiddleware
         if (method_exists($this->calculateParent(), 'initialize')) {
             parent::initialize();
         }
+
         if ($this->haveDatabaseTable()) {
             $list = $this->calculateProperties();
             foreach ($list as $class => $properties) {
@@ -384,13 +386,11 @@ trait ModelMiddleware
         }
         $custom_query = implode(' AND ', $custom_query);
         if ($custom_query) {
-            $custom_query = "({$custom_query}) AND ";
-        }
-
-        if ($conditions) {
-            $conditions = $custom_query . $conditions;
-        } else {
-            $conditions = $custom_query;
+            if ($conditions) {
+                $conditions = "({$custom_query}) AND {$conditions}";
+            }else {
+                $conditions = $custom_query;
+            }
         }
 
         if (!self::staticHaveDatabaseTable()) {
