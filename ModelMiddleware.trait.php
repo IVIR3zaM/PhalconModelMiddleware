@@ -97,18 +97,18 @@ trait ModelMiddleware
 
     public function skipAttributes(array $attributes)
     {
-        if (!is_array($columns)) {
-            $columns = array($columns);
+        if (!is_array($attributes)) {
+            $attributes = array($attributes);
         }
-        $this->_skippedColumns = $columns;
+        $this->_skippedColumns = $attributes;
     }
 
     public function allowEmptyStringValues(array $attributes)
     {
-        if (!is_array($columns)) {
-            $columns = array($columns);
+        if (!is_array($attributes)) {
+            $attributes = array($attributes);
         }
-        $this->_allowEmpties = $columns;
+        $this->_allowEmpties = $attributes;
     }
 
     public function initialize()
@@ -157,7 +157,7 @@ trait ModelMiddleware
             $id = null;
             $idField = static::getUniqueField();
             $custom_fields = array();
-            if (property_exists(get_called_class(), 'getCustomFields')) {
+            if (method_exists(get_called_class(), 'getCustomFields')) {
                 $custom_fields = $this->getCustomFields();
             }
             foreach ($list as $class => $properties) {
@@ -187,7 +187,7 @@ trait ModelMiddleware
             if ($id) {
                 $this->$idField = $id;
             }
-        } elseif (property_exists(get_called_class(), 'getCustomFields')) {
+        } elseif (method_exists(get_called_class(), 'getCustomFields')) {
             $custom_fields = $this->getCustomFields();
             if (is_array($custom_fields)) {
                 foreach ($custom_fields as $index => $value) {
@@ -238,7 +238,7 @@ trait ModelMiddleware
                     }
                 }
             }
-        } elseif (property_exists(get_called_class(), 'getCustomFields')) {
+        } elseif (method_exists(get_called_class(), 'getCustomFields')) {
             $custom_fields = $this->getCustomFields();
             if (is_array($custom_fields)) {
                 foreach ($custom_fields as $index => $value) {
