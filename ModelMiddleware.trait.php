@@ -94,7 +94,7 @@ trait ModelMiddleware
         return $this->_classProperties;
     }
 
-    public function skipAttributes($columns = array())
+    public function skipAttributes(array $attributes)
     {
         if (!is_array($columns)) {
             $columns = array($columns);
@@ -102,7 +102,7 @@ trait ModelMiddleware
         $this->_skippedColumns = $columns;
     }
 
-    public function allowEmptyStringValues($columns = array())
+    public function allowEmptyStringValues(array $attributes)
     {
         if (!is_array($columns)) {
             $columns = array($columns);
@@ -516,6 +516,7 @@ trait ModelMiddleware
                 ],
             ]));
         } elseif (in_array($name, ['fullCount', 'fullSum', 'fullAverage', 'fullMaximum', 'fullMinimum'])) {
+            $name = strtolower(substr($name, 4));
             return parent::$name(self::calculateParams(current($arguments)));
         } elseif (!self::staticHaveDatabaseTable() && preg_match('/^findFirstBy(?P<column>[A-z][\w]+)$/', $name,
                 $match)
