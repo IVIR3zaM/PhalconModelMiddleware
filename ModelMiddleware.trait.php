@@ -360,6 +360,7 @@ trait ModelMiddleware
             $custom_fields = $class::getCustomFields();
         }
 
+        $parameters = (array)$parameters;
         $params = $parameters;
         if (array_key_exists(0, $params)) {
             unset($params[0]);
