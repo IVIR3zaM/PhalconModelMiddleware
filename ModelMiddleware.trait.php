@@ -416,18 +416,18 @@ trait ModelMiddleware
             }
             $params['columns'] = $columns;
         } elseif (($key = array_search($idField, $params['columns'])) !== false) {
-            $params['columns'][$key] = preg_replace("/(^|[\\s|\\W]){$idField}([\\s\\W]|$)/",
+            $params['columns'][$key] = preg_replace("/(^|\\s|[^:\\w]){$idField}([^:\\w]|\\s|$)/",
                 "\$1{$class}.{$idField}\$2",
                 $params['columns'][$key]);
         }
 
 
-        $conditions = preg_replace("/(^|[\\s|\\W]){$idField}([\\s\\W]|$)/", "\$1{$class}.{$idField}\$2", $conditions);
+        $conditions = preg_replace("/(^|\\s|[^:\\w]){$idField}([^:\\w]|\\s|$)/", "\$1{$class}.{$idField}\$2", $conditions);
         $params['conditions'] = $conditions;
 
         foreach (['order', 'column', 'group'] as $field) {
             if (isset($params[$field])) {
-                $params[$field] = preg_replace("/(^|[\\s|\\W]){$idField}([\\s\\W]|$)/", "\$1{$class}.{$idField}\$2",
+                $params[$field] = preg_replace("/(^|\\s|[^:\\w]){$idField}([^:\\w]|\\s|$)/", "\$1{$class}.{$idField}\$2",
                     $params[$field]);
             }
         }
