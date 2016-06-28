@@ -147,10 +147,38 @@ trait ModelMiddleware
         }
     }
 
+    public function beforeDelete()
+    {
+        if (method_exists($this->calculateParent(), 'beforeDelete')) {
+            if (parent::beforeDelete() === false) {
+                return false;
+            }
+        }
+        if ($this->haveDatabaseTable()) {
+            $list = $this->calculateProperties();
+            $idField = static::getUniqueField();
+            foreach ($list as $class => $properties) {
+                if ($class != get_class($this)) {
+                    $object = $class::findFirst([
+                        "{$idField} = :id:",
+                        'bind' => [
+                            'id' => $this->$idField,
+                        ],
+                    ]);
+                    if ($object && $object->delete() === false) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
     public function beforeCreate()
     {
         if (method_exists($this->calculateParent(), 'beforeCreate')) {
-            parent::beforeCreate();
+            if (parent::beforeCreate() === false) {
+                return false;
+            }
         }
         if ($this->haveDatabaseTable()) {
             $list = $this->calculateProperties();
@@ -201,7 +229,9 @@ trait ModelMiddleware
     public function beforeUpdate()
     {
         if (method_exists($this->calculateParent(), 'beforeUpdate')) {
-            parent::beforeUpdate();
+            if (parent::beforeUpdate() === false) {
+                return false;
+            }
         }
         if ($this->haveDatabaseTable()) {
             $idField = static::getUniqueField();
