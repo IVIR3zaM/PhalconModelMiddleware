@@ -108,7 +108,7 @@ trait ModelMiddleware
         if (!is_array($attributes)) {
             $attributes = array($attributes);
         }
-        $this->_allowEmpties = $attributes;
+        $this->_allowEmpties = array_merge($this->_allowEmpties, $attributes);
     }
 
     public function initialize()
@@ -134,10 +134,17 @@ trait ModelMiddleware
         }
     }
 
+    public function beforeValidation()
+    {
+        parent::allowEmptyStringValues($this->_allowEmpties);
+    }
+
     public function beforeValidationOnCreate()
     {
         if (method_exists($this->calculateParent(), 'beforeValidationOnCreate')) {
-            parent::beforeValidationOnCreate();
+            if (parent::beforeValidationOnCreate() === false) {
+                return false;
+            }
         }
         if ($this->haveDatabaseTable()) {
             $id = static::getUniqueField();
@@ -253,6 +260,7 @@ trait ModelMiddleware
                     if (empty($object)) {
                         return false;
                     }
+
                     foreach ($properties as $index => $value) {
                         $object->$index = $this->$index;
                     }
@@ -263,6 +271,7 @@ trait ModelMiddleware
                             }
                         }
                     }
+
                     if (!$object->save()) {
                         return false;
                     }
