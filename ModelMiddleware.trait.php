@@ -136,7 +136,9 @@ trait ModelMiddleware
 
     public function beforeValidation()
     {
-        parent::allowEmptyStringValues($this->_allowEmpties);
+        if (!empty($this->_allowEmpties)) {
+            parent::allowEmptyStringValues($this->_allowEmpties);
+        }
     }
 
     public function beforeValidationOnCreate()
